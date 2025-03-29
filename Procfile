@@ -1,0 +1,1 @@
+web: waitress-serve --port=$PORT school_optimization.wsgi.application

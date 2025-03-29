@@ -1,0 +1,171 @@
+<!-- dashboard/templates/dashboard/home.html -->
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Resource Utilization Dashboard</h1>
+    </div>
+
+    <!-- Visualization Section -->
+    <div class="visualization-container">
+        <h2 class="h4 mb-4 text-primary"><i class="fas fa-chart-bar me-2"></i>Course Enrollment Analytics</h2>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Main Chart -->
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-white">Enrollment vs Capacity</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="enrollmentChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Pie Chart -->
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-white">Room Utilization</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="utilizationChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Course Allocations</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Day</th>
+                                <th>Capacity</th>
+                                <th>Enrollment</th>
+                                <th>Utilization</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prediction in recent_predictions %}
+                            <tr>
+                                <td>{{ prediction.subject }} {{ prediction.course_number }}</td>
+                                <td>{{ prediction.get_meeting_day_display }}</td>
+                                <td>{{ prediction.room_capacity }}</td>
+                                <td>{{ prediction.predicted_enrollment }}</td>
+                                <td>
+                                    <div class="progress">
+                                        {% widthratio prediction.predicted_enrollment prediction.room_capacity 100 as utilization %}
+                                        <div class="progress-bar 
+                                            {% if utilization > 90 %}bg-danger
+                                            {% elif utilization > 70 %}bg-warning
+                                            {% else %}bg-success{% endif %}" 
+                                            role="progressbar" style="width: {{ utilization }}%" 
+                                            aria-valuenow="{{ utilization }}" 
+                                            aria-valuemin="0" aria-valuemax="100">
+                                            {{ utilization }}%
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ prediction.building }} {{ prediction.room }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center">No predictions yet. Try the <a href="{% url 'prediction' %}">Resource Predictor</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Enrollment vs Capacity Chart
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx1 = document.getElementById('enrollmentChart').getContext('2d');
+        const enrollmentChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for prediction in recent_predictions %}
+                        '{{ prediction.subject }} {{ prediction.course_number }}',
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        label: 'Room Capacity',
+                        data: [
+                            {% for prediction in recent_predictions %}
+                                {{ prediction.room_capacity }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: '#4e73df',
+                        borderColor: '#2e59d9',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Expected Enrollment',
+                        data: [
+                            {% for prediction in recent_predictions %}
+                                {{ prediction.predicted_enrollment }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: '#1cc88a',
+                        borderColor: '#17a673',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Students'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Room Utilization Pie Chart
+        const ctx2 = document.getElementById('utilizationChart').getContext('2d');
+        const utilizationChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Underutilized (<70%)', 'Optimal (70-90%)', 'Overutilized (>90%)'],
+                datasets: [{
+                    data: [45, 30, 25],
+                    backgroundColor: ['#1cc88a', '#f6c23e', '#e74a3b'],
+                    hoverBackgroundColor: ['#17a673', '#dda20a', '#be2617'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
