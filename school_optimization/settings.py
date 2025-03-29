@@ -119,8 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# settings.py
+
+# Update this to point to your actual static files directory
 STATICFILES_DIRS = [
-    BASE_DIR / "dashboard" / "static", 
+    BASE_DIR / "dashboard/static", 
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
