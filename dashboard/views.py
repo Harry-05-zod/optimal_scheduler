@@ -1,4 +1,4 @@
-# dashboard/views.py (updated)
+# dashboard/views.py
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
@@ -53,31 +53,29 @@ class PredictionView(View):
             recent_predictions = CourseData.objects.all().order_by('-created_at')[:5]
             
             if form.is_valid():
-                subject = form.cleaned_data['subject']
-                course_number = form.cleaned_data['course_number']
-                meeting_day = form.cleaned_data['meeting_day']
+                form_data = form.cleaned_data
                 
-                logger.info(f"Making prediction for {subject} {course_number} on {meeting_day}")
+                logger.info(f"Making prediction for {form_data['subject']} {form_data['course_number']}")
                 
-                # Get random prediction
-                prediction = self.predictor.predict(subject, course_number, meeting_day)
-                logger.info(f"Generated random prediction: {prediction}")
+                # Get prediction
+                prediction = self.predictor.predict(form_data)
+                logger.info(f"Generated prediction: {prediction}")
                 
                 # Save to database
                 try:
                     CourseData.objects.create(
-                        subject=subject,
-                        course_number=course_number,
-                        meeting_day=meeting_day,
+                        subject=form_data['subject'],
+                        course_number=form_data['course_number'],
+                        meeting_day=form_data['meeting_day'],
                         room_capacity=prediction['room_capacity'],
                         predicted_enrollment=prediction['predicted_enrollment'],
                         seats_available=prediction['seats_available'],
-                        building=prediction['building'],
-                        room=prediction['room'],
-                        begin_time=prediction['begin_time'],
-                        end_time=prediction['end_time']
+                        building=form_data['building'],
+                        room=form_data['room'],
+                        begin_time=form_data['begin_time'],
+                        end_time=form_data['end_time']
                     )
-                    logger.info("Successfully saved random prediction to database")
+                    logger.info("Successfully saved prediction to database")
                 except Exception as e:
                     logger.error(f"Error saving to database: {str(e)}")
                     messages.warning(request, "Prediction was generated but couldn't save to history.")
@@ -85,9 +83,13 @@ class PredictionView(View):
                 context = {
                     'form': form,
                     'prediction': prediction,
-                    'subject': subject,
-                    'course_number': course_number,
-                    'meeting_day': meeting_day,
+                    'subject': form_data['subject'],
+                    'course_number': form_data['course_number'],
+                    'meeting_day': form_data['meeting_day'],
+                    'building': form_data['building'],
+                    'room': form_data['room'],
+                    'begin_time': prediction['begin_time'],
+                    'end_time': prediction['end_time'],
                     'recent_predictions': recent_predictions,
                 }
                 return render(request, self.template_name, context)

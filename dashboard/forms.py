@@ -1,20 +1,7 @@
-# dashboard/forms.py (updated)
+# dashboard/forms.py
 from django import forms
 
 class PredictionForm(forms.Form):
-    SUBJECT_CHOICES = [
-        ('CS', 'Computer Science'),
-        ('MATH', 'Mathematics'),
-        ('ENG', 'Engineering'),
-        ('ART', 'Art'),
-        ('PHYS', 'Physics'),
-        ('CHEM', 'Chemistry'),
-        ('BIO', 'Biology'),
-        ('ENGL', 'English'),
-        ('HIST', 'History'),
-        ('PSYC', 'Psychology'),
-    ]
-    
     DAY_CHOICES = [
         ('MON', 'Monday'),
         ('TUE', 'Tuesday'),
@@ -25,9 +12,12 @@ class PredictionForm(forms.Form):
         ('SUN', 'Sunday'),
     ]
     
-    subject = forms.ChoiceField(
-        choices=SUBJECT_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-select'})
+    subject = forms.CharField(
+        max_length=50,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'e.g. Computer Science'
+        })
     )
     
     course_number = forms.CharField(
@@ -41,4 +31,34 @@ class PredictionForm(forms.Form):
     meeting_day = forms.ChoiceField(
         choices=DAY_CHOICES,
         widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    building = forms.CharField(
+        max_length=50,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'e.g. Science Building'
+        })
+    )
+    
+    room = forms.CharField(
+        max_length=10,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'e.g. 201'
+        })
+    )
+    
+    begin_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'type': 'time'
+        })
+    )
+    
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'type': 'time'
+        })
     )
