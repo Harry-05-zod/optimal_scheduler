@@ -1,4 +1,4 @@
-# dashboard/views.py
+# dashboard/views.py (updated)
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
@@ -26,44 +26,6 @@ class HomeView(View):
             logger.error(f"Error in HomeView: {str(e)}")
             messages.error(request, "An error occurred while loading the dashboard.")
             return render(request, self.template_name, {'recent_predictions': []})
-
-class InsightsView(View):
-    template_name = 'dashboard/insights.html'
-
-    def get(self, request):
-        try:
-            # Tableau visualization parameters
-            tableau_visualizations = [
-                {
-                    'title': 'Enrollment Trends',
-                    'embed_url': 'https://public.tableau.com/views/SchoolEnrollmentTrends/Dashboard1',
-                    'width': '100%',
-                    'height': '600px'
-                },
-                {
-                    'title': 'Room Utilization',
-                    'embed_url': 'https://public.tableau.com/views/RoomUtilization/Dashboard2',
-                    'width': '100%',
-                    'height': '600px'
-                },
-                {
-                    'title': 'Course Demand Analysis',
-                    'embed_url': 'https://public.tableau.com/views/CourseDemand/Dashboard3',
-                    'width': '100%',
-                    'height': '800px'
-                }
-            ]
-            
-            context = {
-                'visualizations': tableau_visualizations,
-                'active_page': 'insights'
-            }
-            return render(request, self.template_name, context)
-            
-        except Exception as e:
-            logger.error(f"Error in InsightsView: {str(e)}")
-            messages.error(request, "An error occurred while loading insights.")
-            return render(request, self.template_name, {'visualizations': []})
 
 class PredictionView(View):
     template_name = 'dashboard/prediction.html'
@@ -97,9 +59,9 @@ class PredictionView(View):
                 
                 logger.info(f"Making prediction for {subject} {course_number} on {meeting_day}")
                 
-                # Get prediction
+                # Get random prediction
                 prediction = self.predictor.predict(subject, course_number, meeting_day)
-                logger.info(f"Prediction result: {prediction}")
+                logger.info(f"Generated random prediction: {prediction}")
                 
                 # Save to database
                 try:
@@ -115,10 +77,10 @@ class PredictionView(View):
                         begin_time=prediction['begin_time'],
                         end_time=prediction['end_time']
                     )
-                    logger.info("Successfully saved prediction to database")
+                    logger.info("Successfully saved random prediction to database")
                 except Exception as e:
                     logger.error(f"Error saving to database: {str(e)}")
-                    messages.warning(request, "Prediction was successful but couldn't save to history.")
+                    messages.warning(request, "Prediction was generated but couldn't save to history.")
                 
                 context = {
                     'form': form,
@@ -139,7 +101,7 @@ class PredictionView(View):
             
         except Exception as e:
             logger.error(f"Error in PredictionView POST: {str(e)}")
-            messages.error(request, "An error occurred while processing your prediction.")
+            messages.error(request, "An error occurred while generating your prediction.")
             return render(request, self.template_name, {
                 'form': PredictionForm(request.POST),
                 'recent_predictions': recent_predictions,

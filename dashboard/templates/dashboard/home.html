@@ -4,87 +4,261 @@
 
 {% block content %}
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Resource Utilization Dashboard</h1>
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold mb-4">
+                <i class="fas fa-chart-pie me-2"></i> Comprehensive Enrollment Dashboard
+            </h1>
+            <p class="lead">Interactive visualizations of enrollment patterns, seat availability, waitlists, and resource utilization across campuses.</p>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Tip:</strong> Hover over any visualization to see detailed tooltips with additional information.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
     </div>
 
-    <!-- Visualization Section -->
-    <div class="visualization-container">
-        <h2 class="h4 mb-4 text-primary"><i class="fas fa-chart-bar me-2"></i>Course Enrollment Analytics</h2>
-        
-        <div class="row">
-            <div class="col-lg-8">
-                <!-- Main Chart -->
-                <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-white">Enrollment vs Capacity</h6>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="enrollmentChart" height="300"></canvas>
+    <!-- Main Enrollment Visualization -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">Student Enrollment by Subject and Section (Fall 2024)</h3>
+            <span class="badge bg-light text-primary" data-bs-toggle="tooltip" data-bs-placement="left" 
+                  title="Shows current enrollment numbers across all subjects and sections">
+                <i class="fas fa-info-circle"></i>
+            </span>
+        </div>
+        <div class="card-body p-0">
+            <div class='tableauPlaceholder' id='viz1742993102237' style='position: relative; width: 100%;'>
+                <noscript>
+                    <a href='#'>
+                        <img alt='Student Enrollment by Subject and Section Fall 2024' 
+                             src='https://public.tableau.com/static/images/OP/OPTIMALSCHEDULERANDENROLLMENTTRENDSVIZ/Dashboard2/1_rss.png' 
+                             style='border: none; width: 100%;' />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='OPTIMALSCHEDULERANDENROLLMENTTRENDSVIZ/Dashboard2' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/OP/OPTIMALSCHEDULERANDENROLLMENTTRENDSVIZ/Dashboard2/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                    <param name='tooltip' value='yes' />
+                </object>
+            </div>
+        </div>
+        <div class="card-footer bg-light">
+            <small><i class="fas fa-mouse-pointer me-1"></i> Click and drag to zoom, hover for details, right-click to reset</small>
+        </div>
+    </div>
+
+    <!-- Visualization Row 1 -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Enrollment vs Seat Availability by College</h3>
+                    <span class="badge bg-light text-primary" data-bs-toggle="tooltip" data-bs-placement="left" 
+                          title="Compares current enrollment against available seats by college">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </div>
+                <div class="card-body p-0">
+                    <div class='tableauPlaceholder' id='viz1742993692190' style='position: relative; width: 100%;'>
+                        <noscript>
+                            <a href='#'>
+                                <img alt='Enrollment Vs Seat Availability by College' 
+                                     src='https://public.tableau.com/static/images/en/enrollmentvsseatavailabilty/Sheet6/1_rss.png' 
+                                     style='border: none; width: 100%;' />
+                            </a>
+                        </noscript>
+                        <object class='tableauViz' style='display:none;'>
+                            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                            <param name='embed_code_version' value='3' />
+                            <param name='site_root' value='' />
+                            <param name='name' value='enrollmentvsseatavailabilty/Sheet6' />
+                            <param name='tabs' value='no' />
+                            <param name='toolbar' value='yes' />
+                            <param name='static_image' value='https://public.tableau.com/static/images/en/enrollmentvsseatavailabilty/Sheet6/1.png' />
+                            <param name='animate_transition' value='yes' />
+                            <param name='display_static_image' value='yes' />
+                            <param name='display_spinner' value='yes' />
+                            <param name='display_overlay' value='yes' />
+                            <param name='display_count' value='yes' />
+                            <param name='language' value='en-US' />
+                            <param name='tooltip' value='yes' />
+                        </object>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- Pie Chart -->
-                <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-white">Room Utilization</h6>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="utilizationChart" height="300"></canvas>
-                    </div>
+                <div class="card-footer bg-light">
+                    <small><i class="fas fa-filter me-1"></i> Click on college names to filter</small>
                 </div>
             </div>
         </div>
 
-        <!-- Data Table -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Recent Course Allocations</h6>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Enrollment by Campus and Student Level</h3>
+                    <span class="badge bg-light text-primary" data-bs-toggle="tooltip" data-bs-placement="left" 
+                          title="Shows enrollment distribution across campuses and student levels (Undergrad/Grad)">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </div>
+                <div class="card-body p-0">
+                    <div class='tableauPlaceholder' id='viz1742993710495' style='position: relative; width: 100%;'>
+                        <noscript>
+                            <a href='#'>
+                                <img alt='Enrollment by Campus and Student Level' 
+                                     src='https://public.tableau.com/static/images/en/enrollmentbycampus/Sheet1/1_rss.png' 
+                                     style='border: none; width: 100%;' />
+                            </a>
+                        </noscript>
+                        <object class='tableauViz' style='display:none;'>
+                            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                            <param name='embed_code_version' value='3' />
+                            <param name='site_root' value='' />
+                            <param name='name' value='enrollmentbycampus/Sheet1' />
+                            <param name='tabs' value='no' />
+                            <param name='toolbar' value='yes' />
+                            <param name='static_image' value='https://public.tableau.com/static/images/en/enrollmentbycampus/Sheet1/1.png' />
+                            <param name='animate_transition' value='yes' />
+                            <param name='display_static_image' value='yes' />
+                            <param name='display_spinner' value='yes' />
+                            <param name='display_overlay' value='yes' />
+                            <param name='display_count' value='yes' />
+                            <param name='language' value='en-US' />
+                            <param name='tooltip' value='yes' />
+                        </object>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <small><i class="fas fa-exchange-alt me-1"></i> Drag to compare student levels</small>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Course</th>
-                                <th>Day</th>
-                                <th>Capacity</th>
-                                <th>Enrollment</th>
-                                <th>Utilization</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for prediction in recent_predictions %}
-                            <tr>
-                                <td>{{ prediction.subject }} {{ prediction.course_number }}</td>
-                                <td>{{ prediction.get_meeting_day_display }}</td>
-                                <td>{{ prediction.room_capacity }}</td>
-                                <td>{{ prediction.predicted_enrollment }}</td>
-                                <td>
-                                    <div class="progress">
-                                        {% widthratio prediction.predicted_enrollment prediction.room_capacity 100 as utilization %}
-                                        <div class="progress-bar 
-                                            {% if utilization > 90 %}bg-danger
-                                            {% elif utilization > 70 %}bg-warning
-                                            {% else %}bg-success{% endif %}" 
-                                            role="progressbar" style="width: {{ utilization }}%" 
-                                            aria-valuenow="{{ utilization }}" 
-                                            aria-valuemin="0" aria-valuemax="100">
-                                            {{ utilization }}%
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{ prediction.building }} {{ prediction.room }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="6" class="text-center">No predictions yet. Try the <a href="{% url 'prediction' %}">Resource Predictor</a></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        </div>
+    </div>
+
+    <!-- Visualization Row 2 -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Actual vs Max Enrollment by Subject</h3>
+                    <span class="badge bg-light text-primary" data-bs-toggle="tooltip" data-bs-placement="left" 
+                          title="Compares current enrollment against maximum capacity by subject area">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </div>
+                <div class="card-body p-0">
+                    <div class='tableauPlaceholder' id='viz1742994075436' style='position: relative; width: 100%;'>
+                        <noscript>
+                            <a href='#'>
+                                <img alt='Comparison of Actual Vs Max Enrollment by Subject' 
+                                     src='https://public.tableau.com/static/images/co/comparisonofactualenrollmentvsmaximumenrollmentbysubject/Sheet4/1_rss.png' 
+                                     style='border: none; width: 100%;' />
+                            </a>
+                        </noscript>
+                        <object class='tableauViz' style='display:none;'>
+                            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                            <param name='embed_code_version' value='3' />
+                            <param name='site_root' value='' />
+                            <param name='name' value='comparisonofactualenrollmentvsmaximumenrollmentbysubject/Sheet4' />
+                            <param name='tabs' value='no' />
+                            <param name='toolbar' value='yes' />
+                            <param name='static_image' value='https://public.tableau.com/static/images/co/comparisonofactualenrollmentvsmaximumenrollmentbysubject/Sheet4/1.png' />
+                            <param name='animate_transition' value='yes' />
+                            <param name='display_static_image' value='yes' />
+                            <param name='display_spinner' value='yes' />
+                            <param name='display_overlay' value='yes' />
+                            <param name='display_count' value='yes' />
+                            <param name='language' value='en-US' />
+                            <param name='tooltip' value='yes' />
+                        </object>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <small><i class="fas fa-search me-1"></i> Hover to see exact enrollment numbers</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Waitlist by Major</h3>
+                    <span class="badge bg-light text-primary" data-bs-toggle="tooltip" data-bs-placement="left" 
+                          title="Shows current waitlist numbers by student major/program">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </div>
+                <div class="card-body p-0">
+                    <div class='tableauPlaceholder' id='viz1742994106988' style='position: relative; width: 100%;'>
+                        <noscript>
+                            <a href='#'>
+                                <img alt='Wait List By Major' 
+                                     src='https://public.tableau.com/static/images/wa/waitlistbymajor/Sheet3/1_rss.png' 
+                                     style='border: none; width: 100%;' />
+                            </a>
+                        </noscript>
+                        <object class='tableauViz' style='display:none;'>
+                            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                            <param name='embed_code_version' value='3' />
+                            <param name='site_root' value='' />
+                            <param name='name' value='waitlistbymajor/Sheet3' />
+                            <param name='tabs' value='no' />
+                            <param name='toolbar' value='yes' />
+                            <param name='static_image' value='https://public.tableau.com/static/images/wa/waitlistbymajor/Sheet3/1.png' />
+                            <param name='animate_transition' value='yes' />
+                            <param name='display_static_image' value='yes' />
+                            <param name='display_spinner' value='yes' />
+                            <param name='display_overlay' value='yes' />
+                            <param name='display_count' value='yes' />
+                            <param name='language' value='en-US' />
+                            <param name='tooltip' value='yes' />
+                        </object>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <small><i class="fas fa-sort me-1"></i> Click column headers to sort</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Insights Section -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0"><i class="fas fa-lightbulb me-2"></i>Key Insights</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="alert alert-success" role="alert">
+                        <h5 class="alert-heading"><i class="fas fa-check-circle me-2"></i>Top Performing</h5>
+                        <ul>
+                            <li>College of Arts has optimal enrollment (87% capacity)</li>
+                            <li>Computer Science courses have 98% enrollment rate</li>
+                            <li>Main Campus shows balanced undergraduate/graduate ratios</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert alert-warning" role="alert">
+                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Areas Needing Attention</h5>
+                        <ul>
+                            <li>Psychology courses are overenrolled by 15%</li>
+                            <li>North Campus has low graduate enrollment (42%)</li>
+                            <li>Biology waitlist has 73 students</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,78 +267,50 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-    // Enrollment vs Capacity Chart
+<script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        const ctx1 = document.getElementById('enrollmentChart').getContext('2d');
-        const enrollmentChart = new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: [
-                    {% for prediction in recent_predictions %}
-                        '{{ prediction.subject }} {{ prediction.course_number }}',
-                    {% endfor %}
-                ],
-                datasets: [
-                    {
-                        label: 'Room Capacity',
-                        data: [
-                            {% for prediction in recent_predictions %}
-                                {{ prediction.room_capacity }},
-                            {% endfor %}
-                        ],
-                        backgroundColor: '#4e73df',
-                        borderColor: '#2e59d9',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Expected Enrollment',
-                        data: [
-                            {% for prediction in recent_predictions %}
-                                {{ prediction.predicted_enrollment }},
-                            {% endfor %}
-                        ],
-                        backgroundColor: '#1cc88a',
-                        borderColor: '#17a673',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Number of Students'
-                        }
-                    }
-                }
+        // Initialize all Tableau visualizations
+        var vizConfigurations = [
+            { id: 'viz1742993102237', height: function(width) { 
+                return width > 800 ? '854px' : width > 500 ? '854px' : '1627px'; 
+            }},
+            { id: 'viz1742993692190', height: function(width) { return (width * 0.75) + 'px'; }},
+            { id: 'viz1742993710495', height: function(width) { return (width * 0.75) + 'px'; }},
+            { id: 'viz1742994075436', height: function(width) { return (width * 0.75) + 'px'; }},
+            { id: 'viz1742994106988', height: function(width) { return (width * 0.75) + 'px'; }}
+        ];
+
+        vizConfigurations.forEach(function(config) {
+            var div = document.getElementById(config.id);
+            if (div) {
+                var viz = div.getElementsByTagName('object')[0];
+                viz.style.width = '100%';
+                viz.style.height = config.height(div.offsetWidth);
+                var script = document.createElement('script');
+                script.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                viz.parentNode.insertBefore(script, viz);
             }
         });
 
-        // Room Utilization Pie Chart
-        const ctx2 = document.getElementById('utilizationChart').getContext('2d');
-        const utilizationChart = new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                labels: ['Underutilized (<70%)', 'Optimal (70-90%)', 'Overutilized (>90%)'],
-                datasets: [{
-                    data: [45, 30, 25],
-                    backgroundColor: ['#1cc88a', '#f6c23e', '#e74a3b'],
-                    hoverBackgroundColor: ['#17a673', '#dda20a', '#be2617'],
-                    hoverBorderColor: "rgba(234, 236, 244, 1)",
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
+        // Initialize Bootstrap tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                trigger: 'hover focus'
+            });
+        });
+
+        // Add custom hover effects for cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.2s ease';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
         });
     });
 </script>
